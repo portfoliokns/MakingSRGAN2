@@ -11,7 +11,7 @@ epochs = 20  # 学習回数
 batch_size = 10  # バッチサイズ（GPUのメモリに依存）
 lr_g = 1.0e-4  # Generatorの学習率
 lr_d = 1.0e-6  # Discriminatorの学習率
-λ1, λ2, λ3 = 1, 1, 0.008  # L1損失
+λ1, λ2, λ3 = 0.008, 1, 1  # L1損失
  
 # データセットの作成
 transform = PairedTransform()
@@ -84,7 +84,7 @@ for epoch in range(start_epoch, epochs + 1):
         perceptual_loss = mse_loss(vgg_extractor(fake_hr), vgg_extractor(hr))
         adversarial_loss = criterion(fake_output, torch.ones_like(fake_output))
         l1_loss = l1_loss_fn(fake_hr, hr)
-        g_loss = perceptual_loss * λ1 + adversarial_loss * λ2 + l1_loss *λ3
+        g_loss = l1_loss *λ1 + perceptual_loss * λ2 + adversarial_loss * λ3
 
         g_loss.backward()
         optim_g.step()
