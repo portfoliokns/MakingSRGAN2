@@ -19,7 +19,7 @@ for image_path in image_files:
             if width >= 1000 and height >= 1000:
                 new_size = (width // 2, height // 2)
                 img_resized = img.resize(new_size, Image.BICUBIC)
-                img_resized = img_resized.filter(ImageFilter.GaussianBlur(radius=0.6)) #ぼかし
+                # img_resized = img_resized.filter(ImageFilter.GaussianBlur(radius=1.0)) #ぼかし #ぼかしを入れるとインプットした画像をもとに生成した際にテクスチャが崩れる場合あり（お勧めしない）
 
                 filename = os.path.basename(image_path)
                 save_path_low = os.path.join(output_folder_low, filename)
